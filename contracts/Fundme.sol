@@ -43,7 +43,7 @@ contract Fund {
     }
 
     constructor (uint amount,address creater,string memory cname,string memory desc) public{
-        createrAddress = payable(msg.sender);
+        createrAddress = payable(creater);
         goal = amount;
         createrName =  cname;
         description = desc;
@@ -68,4 +68,23 @@ contract Fund {
         createrAddress.transfer(value);
         currentBalance = address(this).balance;
     }
+    function getDetails() public view returns(
+      uint,uint,uint,address,string memory,string memory
+      ) {
+      return(
+        goal,
+        totalContributors,
+        address(this).balance,
+        createrAddress,
+        description,
+        createrName
+        );
+    }
+    function getDonaterDetails(uint index) public view returns(
+        string memory,uint){
+            return(
+                donators[index].contributorName,
+                donators[index].contributedAmount
+                );
+        }
 }
